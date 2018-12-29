@@ -1,0 +1,8 @@
+./minerd --user rpc --pass x --url http://127.0.0.1:10340/ --threads 4 --coinbase-addr 13AMyivXSTtKrNAxqDpx2MU7vNDqPuSLfD --coinbase-sig "BIMS coins" -a sha256d -D
+
+
+
+./bx hd-to-ec xprv9uyiEaGcb4vV1Ex7WwPrwiRKnaTXUiTfZg23ymwxQUicSQkW4QZHrbPpdTru6p4XxMs7MbQiBxXn8h2RnpMrmiAzm2TnPVx2TpCEPXi44Y6 | ./bx ec-to-public | ./bx ec-to-address
+13AMyivXSTtKrNAxqDpx2MU7vNDqPuSLfD
+
+
