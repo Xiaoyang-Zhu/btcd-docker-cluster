@@ -5,13 +5,13 @@ Web:
 Client:
   appName: raspinodemon
   apiUrlStart: "/api/bitcoind"
-  pageName: "my bitcoin fullnode"
+  pageName: "Bitcoin-BIMS"
 
 RPC:
   host: localhost
-  port: 8332
-  rpc_username: <some username>
-  rpc_password: <a very secret password>
+  port: 10340
+  rpc_username: rpc
+  rpc_password: x
   concurrency: 100
 
 Zmq:
@@ -21,9 +21,9 @@ Zmq:
     - "hashtx"
     - "rawblock"
     - "rawtx"
-    
+
 Bitcoin:
-  homeDir: '~/.bitcoin'
+  homeDir: '/root/bitcoind-bims'
 
 Api:
   restCalls:
