@@ -1,6 +1,7 @@
-version: '2'
+version: '3'
 services:
   node1:
+    container_name: node-1
     build: .
     cap_add:
       - ALL
@@ -12,6 +13,7 @@ services:
       vpcbr:
         ipv4_address: 10.7.0.11
   node2:
+    container_name: node-2
     build: .
     cap_add:
       - ALL
@@ -22,6 +24,7 @@ services:
       vpcbr:
         ipv4_address: 10.7.0.12
   node3:
+    container_name: node-3
     build: .
     cap_add:
       - ALL
@@ -32,6 +35,7 @@ services:
       vpcbr:
         ipv4_address: 10.7.0.13
   node4:
+    container_name: node-4
     build: .
     cap_add:
       - ALL
