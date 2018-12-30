@@ -25,82 +25,84 @@ Guide: How To Install and Use Docker on Ubuntu 18.04 https://www.digitalocean.co
 	$ sudo usermod -aG docker username
 
 
-####  docker
+#### Install Docker Compose
+Guide: Install Docker Compose
+https://docs.docker.com/compose/install/#master-builds
 
+	sudo curl -L "https://github.com/docker/compose/releases/download/1.23.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 
-	sudo docker-compose build
+	sudo chmod +x /usr/local/bin/docker-compose
 
-	sudo docker-compose up
+	sudo cp /usr/local/bin/docker-compose /usr/bin/
 
-	sudo docker ps
+#### Build and Run Docker Instances
 
-Entering one, run the miner
+	$ docker-compose build
 
-	sudo docker exec -it btcddockercluster_node1_1 bash
+	$ docker-compose up
 
-	bitcoin-cli -rpcuser=rpc -rpcpassword=x -rpcport=10340 getbalance
+#### Run Miner
 
-	bitcoin-cli -rpcuser=rpc -rpcpassword=x -rpcport=10340 getblockchaininfo
+Entering one container, run the miner
 
-	bitcoin-cli -rpcuser=rpc -rpcpassword=x -rpcport=10340 sendrawtransaction
+	$ docker ps
 
-	bitcoin-cli -rpcuser=rpc -rpcpassword=x -rpcport=10340 getrawmempool
+	$ docker exec -it node-1 bash
 
 	// generate params: "" legacy, the second one is for 1 prefix address, otherwise the default is p2sh with 3 prefix address
-	bitcoin-cli -rpcuser=rpc -rpcpassword=x -rpcport=10340 getnewaddress "" legacy
+	$ bitcoin-cli -rpcuser=rpc -rpcpassword=x -rpcport=10340 getnewaddress "" legacy
 	return value: 1Ez1ZNPLPb8rotecEBZWtNWNx8oijzwxQv
-
-	bitcoin-cli -rpcuser=rpc -rpcpassword=x -rpcport=10340 dumpprivkey 1Ez1ZNPLPb8rotecEBZWtNWNx8oijzwxQv
-	return value: L5nBDMzHzTHvR3fKa5VGT8r9cYdVSn9WJU3puoUGcN93SeqT7nrb
-
-	bitcoin-cli -rpcuser=rpc -rpcpassword=x -rpcport=10340 importprivkey L5nBDMzHzTHvR3fKa5VGT8r9cYdVSn9WJU3puoUGcN93SeqT7nrb
 
 	./minerd --user rpc --pass x --url http://127.0.0.1:10340/ --threads 1 --coinbase-addr 1Ez1ZNPLPb8rotecEBZWtNWNx8oijzwxQv --coinbase-sig "BIMS coins" -a sha256d -D
 
 
+#### Send Coins
+After 5 blocks, the maturity of coinbase becomes generate from immature
 
-#### Send coins
+	$ bitcoin-cli -rpcuser=rpc -rpcpassword=x -rpcport=10340 getnewaddress "" legacy
+	return value: 19zgqVoZWrZoWDgfXNyujgZK2dnrNq1T9w
 
-		bitcoin-cli -rpcuser=rpc -rpcpassword=x -rpcport=10340 getnewaddress "" legacy
-		19zgqVoZWrZoWDgfXNyujgZK2dnrNq1T9w
+	$ bitcoin-cli -rpcuser=rpc -rpcpassword=x -rpcport=10340 sendtoaddress 19zgqVoZWrZoWDgfXNyujgZK2dnrNq1T9w 20
 
-		bitcoin-cli -rpcuser=rpc -rpcpassword=x -rpcport=10340 dumpprivkey 19zgqVoZWrZoWDgfXNyujgZK2dnrNq1T9w
-		return value: KzfsUGsbnkc48uDMwfivZJkfFgu2kBADFZ8RMzWue7efGfmv9dXQ
-
-		bitcoin-cli -rpcuser=rpc -rpcpassword=x -rpcport=10340 sendtoaddress 19zgqVoZWrZoWDgfXNyujgZK2dnrNq1T9w 20
-
-		bitcoin-cli -rpcuser=rpc -rpcpassword=x -rpcport=10340 getrawmempool
+	$ bitcoin-cli -rpcuser=rpc -rpcpassword=x -rpcport=10340 getrawmempool
 
 
 
-	bitcoin-cli -rpcuser=rpc -rpcpassword=x -rpcport=10340 listtransactions
+#### Bitcoin Operations List
 
+	$ bitcoin-cli -rpcuser=rpc -rpcpassword=x -rpcport=10340 getbalance
 
+	$ bitcoin-cli -rpcuser=rpc -rpcpassword=x -rpcport=10340 listtransactions
 
-	$ bitcoin-cli -rpcuser=rpc -rpcpassword=x -rpcport=10340 createrawtransaction '[{"txid":"e4cad933221f4fea4edc747d664c543fcb47cab127d3fccc6b79658932c2eaa5","vout":0}]' '{"3C9oBT51t6gv2nTm9eg6od2ePbGWjeebvV":49.95}'
+	$ bitcoin-cli -rpcuser=rpc -rpcpassword=x -rpcport=10340 getblockchaininfo
 
-	$ bitcoin-cli -rpcuser=rpc -rpcpassword=x -rpcport=10340 signrawtransaction "0200000001a5eac2328965796bccfcd327b1ca47cb3f544c667d74dc4eea4f1f2233d9cae40000000000ffffffff01c0a6b9290100000017a91472c1d9fb72a48f626f93a504206b6e813d2a52338700000000" '[{"txid":"e4cad933221f4fea4edc747d664c543fcb47cab127d3fccc6b79658932c2eaa5","vout":0,"scriptPubKey":"a914247f89b252fea20722409dc24fb2e8b58969375587"}]' '["L4edR6AdgJvfMSL4hYV4KMbzK5tEqk7Dt9yKfyFHmusUUfKrakzB"]' "ALL"
+	$ bitcoin-cli -rpcuser=rpc -rpcpassword=x -rpcport=10340 sendrawtransaction
 
-	$ bitcoin-cli -regtest sendrawtransaction 0200000001fefd3443c00f3772a28c3da60fee0fa7a460d181b4e068fbe72248ed59e27276010000008a4730440220309181fec13f4f9696ab6030546a125dcd04b148d0c316fe76c96ec5fd809d8d02204ad03c1a1ef9363b894abcbc63d5b4b14871841963743b76a1fc44ee6454ac65014104a434aa7ac19a69558243772914f79281b555ffed2f825a78006ef6f51b1ed6f48add6538e56d067f7d4f6d4cb9efb59d6e83ff26e40a0559bd0c1e53456c1617ffffffff018033023b0000000017a914feb1a122b740e102e1dbae1cbb0cb83550909ea88700000000
+	$ bitcoin-cli -rpcuser=rpc -rpcpassword=x -rpcport=10340 getrawmempool
 
+	$ bitcoin-cli -rpcuser=rpc -rpcpassword=x -rpcport=10340 importprivkey L5nBDMzHzTHvR3fKa5VGT8r9cYdVSn9WJU3puoUGcN93SeqT7nrb
 
+Two addresses and their dumped private keys in the previous examples
 
+	$ bitcoin-cli -rpcuser=rpc -rpcpassword=x -rpcport=10340 dumpprivkey 1Ez1ZNPLPb8rotecEBZWtNWNx8oijzwxQv
+	return value: L5nBDMzHzTHvR3fKa5VGT8r9cYdVSn9WJU3puoUGcN93SeqT7nrb
 
+	$ bitcoin-cli -rpcuser=rpc -rpcpassword=x -rpcport=10340 dumpprivkey 19zgqVoZWrZoWDgfXNyujgZK2dnrNq1T9w
+	return value: KzfsUGsbnkc48uDMwfivZJkfFgu2kBADFZ8RMzWue7efGfmv9dXQ
 
+#### Docker Operations List
 
+	// List all images
+	$ docker images -a
 
+	// Remove an image
+	$ docker rmi -f 1b55d2b96cc7
 
+	// List all containers
+	$ docker-compose ps
 
-Docker Operations
+	// Remove all containers
+	$ docker-compose rm
 
-
-sudo docker images -a
-
-sudo docker rmi -f 1b55d2b96cc7
-
-docker-compose ps
-
-docker-compose rm
-
-// copy file from a docker to local machine
-sudo docker cp 063ce742fd98:/root/bitcoind-bims/wallet.dat ./
+	// copy file from a docker to local machine
+	$ docker cp 063ce742fd98:/root/bitcoind-bims/wallet.dat ./
