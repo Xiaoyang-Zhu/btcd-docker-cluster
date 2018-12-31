@@ -1,0 +1,12 @@
+
+#### Construct ID Transactions
+
+##### Transfer some bitcoins to online address
+
+	bitcoin-cli -rpcuser=rpc -rpcpassword=x -rpcport=10340 createrawtransaction '[{"txid":"35ed1715a69d7d67c2afcfb80a0793aaaa660ea5bff6c0dc02508135a00a7414","vout":0}]' '{"1PySstbQfTCcm9Q8tC2N85xcupH3o7zeae":19.95}'
+
+	bitcoin-cli -rpcuser=rpc -rpcpassword=x -rpcport=10340 signrawtransaction "020000000114740aa035815002dcc0f6bfa50e66aaaa93070ab8cfafc2677d9da61517ed350000000000ffffffff01c048e976000000001976a914fbffa997e319a72ba2a812933626f6d658dc534b88ac00000000" '[{"txid":"35ed1715a69d7d67c2afcfb80a0793aaaa660ea5bff6c0dc02508135a00a7414","vout":0,"scriptPubKey":"76a91462a9f839f180b2bd217e025cb8fb7afbce69dafa88ac"}]' '["KzfsUGsbnkc48uDMwfivZJkfFgu2kBADFZ8RMzWue7efGfmv9dXQ"]' "ALL"
+
+	bitcoin-cli -rpcuser=rpc -rpcpassword=x -rpcport=10340 sendrawtransaction 020000000114740aa035815002dcc0f6bfa50e66aaaa93070ab8cfafc2677d9da61517ed35000000006b483045022100c2e0d231d3d3664d7e78d2ca6f08ec3e99350e1f906343067719f3de8896a69d022018089a38680079d04aedc2eb333a5100f2382232e15382e6cb3fc12db55ae217012102bc038218fac822324249815ced689271b984736e554eab92485181c2d7f59723ffffffff01c048e976000000001976a914fbffa997e319a72ba2a812933626f6d658dc534b88ac00000000
+
+##### First P2SH transaction in regtest
