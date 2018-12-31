@@ -35,7 +35,25 @@ https://docs.docker.com/compose/install/#master-builds
 
 	sudo cp /usr/local/bin/docker-compose /usr/bin/
 
+#### Download Docker Cluster Project
+
+	git clone --recursive https://github.com/Xiaoyang-Zhu/btcd-docker-cluster.git
+
+#### Generate Genesis Block and Modify the Source Code for the Submodule Bitcoin-BIMS
+In the submodule directory, Bitcoin-BIMS/genesis-block/ run the following command:
+
+	./genesis 044e6c20a3dbb6938b6428b17628682eb3daba62849455e13e71966a6ccb576da081381e060f41e9911b4f5a7a70025be5ff787d1b4308159edc2a5075ff688fea   "27/Dec/2018 Xiaoyang, Blockchain-based Identity Management System for IoT" 486604799
+
+Get the last three return values: Hash, Nonce, and Unix time
+Modify the following two lines:
+
+	In src/chainparams.cpp
+
+	genesis = CreateGenesisBlock(Unix time, Nonce, 0x1d00ffff, 1, 50 * COIN);
+	assert(consensus.hashGenesisBlock == uint256S("0xHash"));
+
 #### Build and Run Docker Instances
+Enter the btcd-docker-cluster directory, build and run the cluster
 
 	docker-compose build
 
