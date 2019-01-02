@@ -74,6 +74,15 @@ Entering one container, run the miner
 	./minerd --user rpc --pass x --url http://127.0.0.1:10340/ --threads 1 --coinbase-addr 1Ez1ZNPLPb8rotecEBZWtNWNx8oijzwxQv --coinbase-sig "BIMS coins" -a sha256d -D
 
 
+
+//TESTNET
+
+	bitcoin-cli -testnet -rpcuser=rpc -rpcpassword=x -rpcport=10340 getnewaddress  "" legacy
+	msbSfGZd9HuiRY5UQQ4cRcD9WNCnzEPgha
+	./minerd --user rpc --pass x --url http://127.0.0.1:10340/ --threads 1 --coinbase-addr msbSfGZd9HuiRY5UQQ4cRcD9WNCnzEPgha --coinbase-sig "BIMS coins" -a sha256d -D
+
+
+
 #### Send Coins
 After 5 blocks, the maturity of coinbase becomes generate from immature
 
@@ -84,6 +93,16 @@ After 5 blocks, the maturity of coinbase becomes generate from immature
 
 	bitcoin-cli -rpcuser=rpc -rpcpassword=x -rpcport=10340 getrawmempool
 
+
+	//TESTNET
+
+		bitcoin-cli -testnet -rpcuser=rpc -rpcpassword=x -rpcport=10340 getnewaddress
+		n17CqhzzNDdxXMitYCm1PesYQqWuqf3ud5
+
+
+		bitcoin-cli -testnet -rpcuser=rpc -rpcpassword=x -rpcport=10340 sendtoaddress n17CqhzzNDdxXMitYCm1PesYQqWuqf3ud5 20
+
+		bitcoin-cli -testnet -rpcuser=rpc -rpcpassword=x -rpcport=10340 getrawmempool
 
 #### Bitcoin Operations List
 

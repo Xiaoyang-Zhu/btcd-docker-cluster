@@ -1,53 +1,53 @@
 version: '3'
 services:
   node1:
-    container_name: node-1
+    container_name: node-1-testnet
     build: .
     cap_add:
       - ALL
-    command: bitcoind -addnode=10.7.0.12:12345 -addnode=10.7.0.13:12345 -addnode=10.7.0.14:12345 -rpcuser=rpc -rpcpassword=x -rpcport=10340  --datadir=/root/bitcoind-bims/ -port=12345 -walletbroadcast=1 -txindex=1 -server=1 -rest=1 -zmqpubhashtx=tcp://127.0.0.1:28332 -zmqpubhashblock=tcp://127.0.0.1:28332 -zmqpubrawblock=tcp://127.0.0.1:28332 -zmqpubrawtx=tcp://127.0.0.1:28332
+    command: bitcoind -testnet -addnode=10.8.0.12:12345 -addnode=10.8.0.13:12345 -addnode=10.8.0.14:12345 -rpcuser=rpc -rpcpassword=x -rpcport=10340  --datadir=/root/bitcoind-bims/ -port=12345 -walletbroadcast=1 -txindex=1 -server=1 -rest=1 
     volumes:
       - ./miner:/root/miner
       - ./dashboard:/root/dashboard
     networks:
       vpcbr:
-        ipv4_address: 10.7.0.11
+        ipv4_address: 10.8.0.11
   node2:
-    container_name: node-2
+    container_name: node-2-testnet
     build: .
     cap_add:
       - ALL
-    command: bitcoind -addnode=10.7.0.11:12345 -addnode=10.7.0.13:12345 -addnode=10.7.0.14:12345 -rpcuser=rpc -rpcpassword=x -rpcport=10340 --datadir=/root/bitcoind-bims/ -port=12345 -walletbroadcast=1
+    command: bitcoind -testnet -addnode=10.8.0.11:12345 -addnode=10.8.0.13:12345 -addnode=10.8.0.14:12345 -rpcuser=rpc -rpcpassword=x -rpcport=10340 --datadir=/root/bitcoind-bims/ -port=12345 -walletbroadcast=1
     volumes:
       - ./miner:/root/miner
     networks:
       vpcbr:
-        ipv4_address: 10.7.0.12
+        ipv4_address: 10.8.0.12
   node3:
-    container_name: node-3
+    container_name: node-3-testnet
     build: .
     cap_add:
       - ALL
-    command: bitcoind -addnode=10.7.0.12:12345 -addnode=10.7.0.11:12345 -addnode=10.7.0.14:12345 -rpcuser=rpc -rpcpassword=x -rpcport=10340 --datadir=/root/bitcoind-bims/ -port=12345 -walletbroadcast=1
+    command: bitcoind -testnet -addnode=10.8.0.12:12345 -addnode=10.8.0.11:12345 -addnode=10.8.0.14:12345 -rpcuser=rpc -rpcpassword=x -rpcport=10340 --datadir=/root/bitcoind-bims/ -port=12345 -walletbroadcast=1
     volumes:
       - ./miner:/root/miner
     networks:
       vpcbr:
-        ipv4_address: 10.7.0.13
+        ipv4_address: 10.8.0.13
   node4:
-    container_name: node-4
+    container_name: node-4-testnet
     build: .
     cap_add:
       - ALL
-    command: bitcoind -addnode=10.7.0.11:12345 -addnode=10.7.0.13:12345 -addnode=10.7.0.12:12345 -rpcuser=rpc -rpcpassword=x -rpcport=10340 --datadir=/root/bitcoind-bims/ -port=12345 -walletbroadcast=1
+    command: bitcoind -testnet -addnode=10.8.0.11:12345 -addnode=10.8.0.13:12345 -addnode=10.8.0.12:12345 -rpcuser=rpc -rpcpassword=x -rpcport=10340 --datadir=/root/bitcoind-bims/ -port=12345 -walletbroadcast=1
     volumes:
       - ./miner:/root/miner
     networks:
       vpcbr:
-        ipv4_address: 10.7.0.14
+        ipv4_address: 10.8.0.14
 networks:
   vpcbr:
     driver: bridge
     ipam:
      config:
-       - subnet: 10.7.0.0/16
+       - subnet: 10.8.0.0/16
