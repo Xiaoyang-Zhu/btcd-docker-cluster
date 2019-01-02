@@ -212,4 +212,6 @@
 
 		txid: 52ab6bc77ed743e453a1db56791b8c8a4b1294a9dd05fa2984480728bfe1f90c
 
-Reference: Bitcoin-BIMS/doc/bitcoin-regtest-buildtxbyhand-tutorial.md
+References:
+1. Bitcoin-BIMS/doc/bitcoin-regtest-buildtxbyhand-tutorial.md
+2. Bitcoin-BIMS/doc/bitcoin-regtest-addresstokeys.md
