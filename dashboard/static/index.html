@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Full bitcoin client info page</title>
+  <title>Bitcoin-BIMS Dashboard</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -13,8 +13,8 @@
 </head>
 <body ng-app="raspinodemon">
 
-<nav class="navbar navbar-default" ng-controller="indexCtrl">
-  <div class="container-fluid">
+<nav class="navbar-bims" ng-controller="indexCtrl">
+  <div class="container-fluid-bims">
     <div class="navbar-header">
       <a class="navbar-brand" href="#" ng-cloak>{{pageName}} <span ng-show="test" class="label label-danger" ng-cloak>Testnet</span><span ng-show="main" class="label label-success" ng-cloak>Mainnet</span><span ng-show="regtest" class="label label-info" ng-cloak>Regtest</span></a>
     </div>
@@ -23,12 +23,11 @@
       <li ui-sref-active="active"><a ui-sref="mempool">Mempool</a></li>
       <li ui-sref-active="active"><a ui-sref="blockexplorer">BlockExplorer</a></li>
       <li ui-sref-active="active"><a ui-sref="txexplorer">TransactionExplorer</a></li>
-      <li ui-sref-active="about"><a ui-sref="about">About</a></li>
     </ul>
   </div>
 </nav>
 
-<div class="container">
+<div class="container-bims">
 	<div ui-view></div>
 </div>
 
