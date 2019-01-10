@@ -2,6 +2,28 @@
 
 FROM ubuntu:18.04
 
+# Install JAVA11
+RUN apt-get update && \
+            apt-get install -y software-properties-common apt-utils && \
+            echo oracle-java11-installer shared/accepted-oracle-license-v1-2 select true | debconf-set-selections && \
+            add-apt-repository -y ppa:linuxuprising/java && \
+            apt-get update && \
+            apt-get install -y oracle-java11-installer && \
+            rm -rf /var/lib/apt/lists/* && \
+            rm -rf /var/cache/oracle-jdk11-installer
+
+# Set Timezone for Mongodb
+ENV TZ=Europe/Paris
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+# Install Mongodb
+RUN apt-get update && \
+    apt-get install -y gnupg && \
+    apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 9DA31620334BD75D9DCB49F368818C72E52529D4 && \
+    echo "deb http://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.0 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-4.0.list && \
+    apt-get update && \
+    apt-get install -y mongodb-org
+
 # Construct the dependencies of compiling and installing bitcoin client
 
 RUN apt-get update \
@@ -18,3 +40,5 @@ RUN ./autogen.sh \
     && make \
     && make install \
     && mkdir -p /root/bitcoind-bims/
+
+WORKDIR /root/start

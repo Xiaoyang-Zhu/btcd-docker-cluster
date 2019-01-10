@@ -5,46 +5,62 @@ services:
     build: .
     cap_add:
       - ALL
-    command: bitcoind -addnode=10.7.0.12:12345 -addnode=10.7.0.13:12345 -addnode=10.7.0.14:12345 -rpcuser=rpc -rpcpassword=x -rpcport=10340  --datadir=/root/bitcoind-bims/ -port=12345 -walletbroadcast=1 -txindex=1 -server=1 -rest=1 -zmqpubhashtx=tcp://127.0.0.1:28332 -zmqpubhashblock=tcp://127.0.0.1:28332 -zmqpubrawblock=tcp://127.0.0.1:28332 -zmqpubrawtx=tcp://127.0.0.1:28332
+    command: bash -c "./start-apis.sh"
     volumes:
       - ./miner:/root/miner
       - ./dashboard:/root/dashboard
+      - ./runtime/node-1:/root/start
+      - ./Apiscerana/iam-apiscerana/target:/root/apiscerana
     networks:
       vpcbr:
         ipv4_address: 10.7.0.11
+    ports:
+      - "35001:8080"
   node2:
     container_name: node-2
     build: .
     cap_add:
       - ALL
-    command: bitcoind -addnode=10.7.0.11:12345 -addnode=10.7.0.13:12345 -addnode=10.7.0.14:12345 -rpcuser=rpc -rpcpassword=x -rpcport=10340 --datadir=/root/bitcoind-bims/ -port=12345 -walletbroadcast=1
+    command: bash -c "./start-apis.sh"
     volumes:
       - ./miner:/root/miner
+      - ./runtime/node-2:/root/start
+      - ./Apiscerana/iam-apiscerana/target:/root/apiscerana
     networks:
       vpcbr:
         ipv4_address: 10.7.0.12
+    ports:
+      - "35002:8080"
   node3:
     container_name: node-3
     build: .
     cap_add:
       - ALL
-    command: bitcoind -addnode=10.7.0.12:12345 -addnode=10.7.0.11:12345 -addnode=10.7.0.14:12345 -rpcuser=rpc -rpcpassword=x -rpcport=10340 --datadir=/root/bitcoind-bims/ -port=12345 -walletbroadcast=1
+    command: bash -c "./start-apis.sh"
     volumes:
       - ./miner:/root/miner
+      - ./runtime/node-3:/root/start
+      - ./Apiscerana/iam-apiscerana/target:/root/apiscerana
     networks:
       vpcbr:
         ipv4_address: 10.7.0.13
+    ports:
+      - "35003:8080"
   node4:
     container_name: node-4
     build: .
     cap_add:
       - ALL
-    command: bitcoind -addnode=10.7.0.11:12345 -addnode=10.7.0.13:12345 -addnode=10.7.0.12:12345 -rpcuser=rpc -rpcpassword=x -rpcport=10340 --datadir=/root/bitcoind-bims/ -port=12345 -walletbroadcast=1
+    command: bash -c "./start-apis.sh"
     volumes:
       - ./miner:/root/miner
+      - ./runtime/node-4:/root/start
+      - ./Apiscerana/iam-apiscerana/target:/root/apiscerana
     networks:
       vpcbr:
         ipv4_address: 10.7.0.14
+    ports:
+      - "35004:8080"
 networks:
   vpcbr:
     driver: bridge
