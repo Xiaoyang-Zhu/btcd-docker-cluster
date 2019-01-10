@@ -1,3 +1,5 @@
 [submodule "Bitcoin-BIMS"]
 	path = Bitcoin-BIMS
 	url = https://github.com/Xiaoyang-Zhu/Bitcoin-BIMS
+[submodule "Apiscerana"]
+	url = https://github.com/Xiaoyang-Zhu/Apiscerana
