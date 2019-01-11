@@ -18,6 +18,13 @@ Backing to the root directory of the Project and following docker-bitcoin-cluste
 	docker-compose build
 	docker-compose up
 
+Check the services through:
+Dashboard http://localhost:5000
+Node-1 http://localhost:35001
+Node-2 http://localhost:35002
+Node-3 http://localhost:35003
+Node-4 http://localhost:35004
+
 Voilà !
 
 Note: How to setup miners? It could be found in  docker-bitcoin-cluster-tutorial.
