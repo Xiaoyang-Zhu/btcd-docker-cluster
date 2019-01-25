@@ -18,7 +18,7 @@ Backing to the root directory of the Project and following docker-bitcoin-cluste
 	docker-compose build
 	docker-compose up
 
-Voilà ! You deployed the cluster
+Voilà ! You have deployed the cluster.
 
 Check the services through:
 Dashboard http://localhost:5000
@@ -27,11 +27,9 @@ Node-2 http://localhost:35002
 Node-3 http://localhost:35003
 Node-4 http://localhost:35004
 
+Note: How to setup miners? It could be found in  docker-bitcoin-cluster-tutorial.
 
-### Run it after compiling
+## Run it after compiling
 Enter root directory of the Project and run command:
 
 	docker-compose up
-
-
-Note: How to setup miners? It could be found in  docker-bitcoin-cluster-tutorial.
