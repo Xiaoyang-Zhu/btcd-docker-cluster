@@ -35,6 +35,9 @@ https://docs.docker.com/compose/install/#master-builds
 
 	sudo cp /usr/local/bin/docker-compose /usr/bin/
 
+#### Download Docker Cluster Project
+
+	git clone --recursive https://github.com/Xiaoyang-Zhu/btcd-docker-cluster.git
 
 #### Generate Genesis Block and Modify the Source Code for the Submodule Bitcoin-BIMS
 In the submodule directory, Bitcoin-BIMS/genesis-block/ run the following command:
@@ -49,6 +52,12 @@ Modify the following two lines:
 	genesis = CreateGenesisBlock(Unix time, Nonce, 0x1d00ffff, 1, 50 * COIN);
 	assert(consensus.hashGenesisBlock == uint256S("0xHash"));
 
+#### Build and Run Docker Instances
+Enter the btcd-docker-cluster directory, build and run the cluster
+
+	docker-compose build
+
+	docker-compose up
 
 #### Run Miner
 
@@ -58,29 +67,59 @@ Entering one container, run the miner
 
 	docker exec -it node-1 bash
 
-	cd /root/miner
+	// generate params: "" legacy, the second one is for 1 prefix address, otherwise the default is p2sh with 3 prefix address
+	bitcoin-cli -rpcuser=rpc -rpcpassword=x -rpcport=10340 getnewaddress "" legacy
+	return value: 1Ez1ZNPLPb8rotecEBZWtNWNx8oijzwxQv
 
 	./minerd --user rpc --pass x --url http://127.0.0.1:10340/ --threads 1 --coinbase-addr 1Ez1ZNPLPb8rotecEBZWtNWNx8oijzwxQv --coinbase-sig "BIMS coins" -a sha256d -D
 
 
-#### Enabled Update Transactions Functionality
-After 5 blocks, the maturity of coinbase becomes generated from immature
+#### Send Coins
+After 5 blocks, the maturity of coinbase becomes generate from immature
 
-	docker exec -it node-1 bash
+	bitcoin-cli -rpcuser=rpc -rpcpassword=x -rpcport=10340 getnewaddress "" legacy
+	return value: 19zgqVoZWrZoWDgfXNyujgZK2dnrNq1T9w
 
-	// import the private key of predefined account: 1Ez1ZNPLPb8rotecEBZWtNWNx8oijzwxQv
+	bitcoin-cli -rpcuser=rpc -rpcpassword=x -rpcport=10340 sendtoaddress 19zgqVoZWrZoWDgfXNyujgZK2dnrNq1T9w 20
+
+	bitcoin-cli -rpcuser=rpc -rpcpassword=x -rpcport=10340 getrawmempool
+
+
+#### Bitcoin Operations List
+
+	bitcoin-cli -rpcuser=rpc -rpcpassword=x -rpcport=10340 getbalance
+
+	bitcoin-cli -rpcuser=rpc -rpcpassword=x -rpcport=10340 listtransactions
+
+	bitcoin-cli -rpcuser=rpc -rpcpassword=x -rpcport=10340 getblockchaininfo
+
+	bitcoin-cli -rpcuser=rpc -rpcpassword=x -rpcport=10340 sendrawtransaction
+
+	bitcoin-cli -rpcuser=rpc -rpcpassword=x -rpcport=10340 getrawmempool
+
 	bitcoin-cli -rpcuser=rpc -rpcpassword=x -rpcport=10340 importprivkey L5nBDMzHzTHvR3fKa5VGT8r9cYdVSn9WJU3puoUGcN93SeqT7nrb
 
-In node-1 (localhost:35001), you can send transactions in Blockchain IdP module.
+Two addresses and their dumped private keys in the previous examples
 
-#### Predefined Bitcoin Coinbase Account
+	bitcoin-cli -rpcuser=rpc -rpcpassword=x -rpcport=10340 dumpprivkey 1Ez1ZNPLPb8rotecEBZWtNWNx8oijzwxQv
+	return value: L5nBDMzHzTHvR3fKa5VGT8r9cYdVSn9WJU3puoUGcN93SeqT7nrb
 
-This account was created for providing fees of sending identity transactions in Apiscerana Blockchain module.
+	bitcoin-cli -rpcuser=rpc -rpcpassword=x -rpcport=10340 dumpprivkey 19zgqVoZWrZoWDgfXNyujgZK2dnrNq1T9w
+	return value: KzfsUGsbnkc48uDMwfivZJkfFgu2kBADFZ8RMzWue7efGfmv9dXQ
 
-		// generate params: "" legacy, the second one is for 1 prefix address, otherwise the default is p2sh with 3 prefix address
-		bitcoin-cli -rpcuser=rpc -rpcpassword=x -rpcport=10340 getnewaddress "" legacy
-		return value: 1Ez1ZNPLPb8rotecEBZWtNWNx8oijzwxQv
+#### Docker Operations List
 
-		// dump the private key of 1Ez1ZNPLPb8rotecEBZWtNWNx8oijzwxQv
-		bitcoin-cli -rpcuser=rpc -rpcpassword=x -rpcport=10340 dumpprivkey 1Ez1ZNPLPb8rotecEBZWtNWNx8oijzwxQv
-		return value: L5nBDMzHzTHvR3fKa5VGT8r9cYdVSn9WJU3puoUGcN93SeqT7nrb
+	// List all images
+	docker images -a
+
+	// Remove an image
+	docker rmi -f 1b55d2b96cc7
+
+	// List all containers
+	docker-compose ps
+
+	// Remove all containers
+	docker-compose rm
+
+	// copy file from a docker to local machine
+	docker cp 063ce742fd98:/root/bitcoind-bims/wallet.dat ./

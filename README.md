@@ -27,7 +27,7 @@ Node-2 http://localhost:35002
 Node-3 http://localhost:35003
 Node-4 http://localhost:35004
 
-Note: How to setup miners? It could be found in  docker-bitcoin-cluster-tutorial.
+Note: Only after enabling miners, the functionality of updating  bitcoin BIMS transactions in Blockchain IdP module operates well. How to setup miners? It could be found in  docker-bitcoin-cluster-tutorial.
 
 ## Run it after compiling
 Enter root directory of the Project and run command:
