@@ -7,7 +7,7 @@
 
 #### Compile Apiscerana
 
-Entering folder Apiscerana and following README tutorial in Apiscerana, install JAVA, Maven, Mongodb.
+Entering folder Apiscerana and following README tutorial in Apiscerana, install JAVA, Maven.
 
 	mvn package
 
